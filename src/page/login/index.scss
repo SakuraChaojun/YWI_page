@@ -1,0 +1,39 @@
+.login{
+
+    height:100vh;
+    background-position: center;
+    background-size:cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+        .part{
+            width:364px;
+            height: 400px;
+            padding:100px 20px 0 20px;
+            background-color: white;
+            margin-left: 900px;
+
+            .title{
+                margin-bottom: 50px;
+                .logo{
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                }
+
+                h3{text-align: center;
+                    color:#E81E1A;
+                    margin-top:20px ;}
+
+            }
+        }
+
+        
+
+
+
+
+    }
+
