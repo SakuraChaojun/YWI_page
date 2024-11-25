@@ -3,7 +3,10 @@ import bg from "../../assets/bg.jpeg";
 import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input } from "antd";
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
+import http from '../../utils/http/http';
+import { useEffect } from "react";
 import "./index.scss";
+import { login } from "../../api/users";
 function Login() {
 
   const[form] = Form.useForm();
@@ -13,6 +16,11 @@ function Login() {
       console.log(res)
     }).catch((err)=>{});
   }
+
+  useEffect(()=>{
+   login({userName:'亿微',password:'123'})
+
+  },[])
   
   return (
     <div className="login" style={{ backgroundImage: `url(${bg})` }}>
