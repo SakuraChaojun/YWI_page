@@ -9,10 +9,14 @@ import { setToken } from "../../store/logins/authSlice";
 import { useDispatch} from "react-redux";
 import "./index.scss";
 import { login } from "../../api/users";
+import { replace, useNavigate } from "react-router-dom";
+import { useState } from "react";
 function Login() {
 
   const[form] = Form.useForm();
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const[loading,setLoading] = useState<boolean>(false)
   
   //登陆逻辑控制
   function handleLogin(){
@@ -21,13 +25,17 @@ function Login() {
 
     
     form.validateFields().then(async(res)=>{
+      setLoading(true)
       const {data:{token}} = await login(res); //使用mock数据测试，获得后存到redux 中
+      setLoading(false)
       dispatch(setToken(token))
+      navigate('/',{replace:true})
 
 
       //console.log(res)
       //console.log(data)
-    }).catch((err)=>{});
+    }).catch((err)=>{})
+    setLoading(false);
   }
 
   // useEffect(()=>{
@@ -78,7 +86,10 @@ function Login() {
 
           <Form.Item >
             <Button type="primary" htmlType="submit" style={{width:"100%"}}
-            onClick={handleLogin}>  
+            onClick={handleLogin}
+            loading = {loading}
+            >  
+            
               登录
             </Button>
           </Form.Item>

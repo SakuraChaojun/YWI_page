@@ -1,6 +1,6 @@
 import axios,{AxiosInstance,InternalAxiosRequestConfig,AxiosResponse} from 'axios'
 import{message}from 'antd'
-
+import { store } from '../../store'
 const http:AxiosInstance = axios.create({
     baseURL:"https://www.demo.com",
     timeout:5000
@@ -9,7 +9,13 @@ const http:AxiosInstance = axios.create({
 
 //请求拦截器
 http.interceptors.request.use((config:InternalAxiosRequestConfig)=>{
-    
+    const {token} = store.getState().authSlice;
+
+    if(token){
+        //Authorization 专门携带认证信息
+        config.headers['Authorization'] = `Bearer ${token}`
+    }
+
     return config;
 
 })
