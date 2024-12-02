@@ -5,24 +5,37 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
 import http from '../../utils/http/http';
 import { useEffect } from "react";
+import { setToken } from "../../store/logins/authSlice";
+import { useDispatch} from "react-redux";
 import "./index.scss";
 import { login } from "../../api/users";
 function Login() {
 
   const[form] = Form.useForm();
-
+  const dispatch = useDispatch()
+  
+  //登陆逻辑控制
   function handleLogin(){
-    form.validateFields().then((res)=>{
-      console.log(res)
+    
+    
+
+    
+    form.validateFields().then(async(res)=>{
+      const {data:{token}} = await login(res); //使用mock数据测试，获得后存到redux 中
+      dispatch(setToken(token))
+
+
+      //console.log(res)
+      //console.log(data)
     }).catch((err)=>{});
   }
 
-  useEffect(()=>{
-   login({userName:'亿微',password:'123'})
-
-  },[])
+  // useEffect(()=>{
+  //  login({userName:'亿微',password:'123'})
+  // },[])
   
   return (
+    //使用antd组件来实现页面绘制
     <div className="login" style={{ backgroundImage: `url(${bg})` }}>
       <div className="part">
         <div className="title">
@@ -32,7 +45,7 @@ function Login() {
           <h2>亿微移民资讯管理平台</h2>
         </div>
 
-       
+       {/* antd 组件控制台 */}
         <Form form={form}
         initialValues={{remember:true}}
         autoComplete="on"
